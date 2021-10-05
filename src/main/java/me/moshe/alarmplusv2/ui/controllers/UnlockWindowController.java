@@ -6,21 +6,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import me.moshe.alarmplusv2.Main;
 
-import javax.print.attribute.standard.Media;
-import javax.sound.sampled.*;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UnlockWindowController implements Initializable {
 
-    static int passLength = 4;
-    static File audioFile = new File("C:\\Users\\Drago\\IdeaProjects\\AlarmPlusV2\\src\\main\\defaultAlarm.wav");
+    int passLength = Main.getDataFile().getItem().getPassLength();
+    File audioFile = new File(Main.getDataFile().getItem().getAlarmSoundPath());
     int password = 0;
-    Clip clip;
-    AudioInputStream audioInputStream;
+    Media media;
+    MediaPlayer mediaPlayer;
 
 
     @FXML AnchorPane anchorPane;
@@ -44,14 +44,10 @@ public class UnlockWindowController implements Initializable {
     }
 
     private void playAlarm(){
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(audioFile);
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-            e.printStackTrace();
-        }
+        media = new Media(audioFile.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
     }
 
     private int getMaximum(int digits){
@@ -71,7 +67,7 @@ public class UnlockWindowController implements Initializable {
         checkLabel.setVisible(true);
         String pass = String.valueOf(password);
         if(passwordField.getText().equals(pass)){
-            clip.stop();
+            mediaPlayer.stop();
             checkLabel.getScene().getWindow().hide();
         }
         else checkLabel.setText("Incorrect!");

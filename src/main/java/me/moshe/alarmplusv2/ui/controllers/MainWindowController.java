@@ -13,6 +13,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import me.border.utilities.scheduler.AsyncTasker;
+import me.border.utilities.scheduler.async.AsyncTaskBuilder;
+import me.moshe.alarmplusv2.Main;
 import me.moshe.alarmplusv2.ui.Interface;
 
 import java.io.IOException;
@@ -22,11 +25,11 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class MainWindowController implements Initializable {
     SimpleDateFormat timeFormat;
     String time;
-    Thread alarmTriggerThread;
 
     @FXML public AnchorPane anchorPane;
 
@@ -36,6 +39,14 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(Main.getDataFile().getItem().getPassLength() == 0){
+            Main.getDataFile().getItem().setPassLength(4);
+            AsyncTasker.runTaskAsync(() -> Main.getDataFile().save());
+        }
+        else if(Main.getDataFile().getItem().getAlarmSoundPath() == null){
+            Main.getDataFile().getItem().setAlarmSoundPath("C:\\Users\\Drago\\IdeaProjects\\AlarmPlusV2\\src\\main\\resources\\defaultAlarm.wav");
+            AsyncTasker.runTaskAsync(() -> Main.getDataFile().save());
+        }
         getCurrentTime();
         fixSlider(setHour, setMin);
         fixLabels();
@@ -52,10 +63,13 @@ public class MainWindowController implements Initializable {
         LocalTime timePressed = LocalTime.now();
         LocalTime alarm = LocalTime.of((int) setHour.getValue(), (int) setMin.getValue());
         long untilAlarm = timePressed.until(alarm, ChronoUnit.MILLIS);
-        if(untilAlarm < 0){
+        if(untilAlarm < 0) {
             untilAlarm -= untilAlarm - 8.64e+7 - untilAlarm;
         }
-        delay(this::openUnlockWindow, untilAlarm);
+        AsyncTaskBuilder.builder()
+                .after(untilAlarm, TimeUnit.MILLISECONDS)
+                .task(() -> Platform.runLater(this::openUnlockWindow))
+                .build();
     }
 
     private void openUnlockWindow(){
@@ -74,23 +88,6 @@ public class MainWindowController implements Initializable {
         catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    private void delay(Runnable task, long delayMs) {
-        if (alarmTriggerThread != null && alarmTriggerThread.isAlive()) alarmTriggerThread.interrupt();
-        alarmTriggerThread = new Thread(() -> {
-            boolean interrupted = false;
-            try {
-                Thread.sleep(delayMs);
-            } catch (InterruptedException ignored) {
-                interrupted = true;
-            }
-            if (!interrupted) {
-                Platform.runLater(task);
-            }
-        });
-        alarmTriggerThread.setDaemon(true);
-        alarmTriggerThread.start();
     }
 
     private void setAlarmLabel(int hour, int min){
