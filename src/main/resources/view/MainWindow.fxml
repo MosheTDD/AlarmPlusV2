@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #191414;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.moshe.alarmplusv2.ui.controllers.MainWindowController">
+   <children>
+      <Label fx:id="currentTimeLabel" alignment="CENTER" layoutX="394.0" layoutY="72.0" prefHeight="57.0" prefWidth="250.0" text="Time" textAlignment="CENTER" textFill="#57f287">
+         <font>
+            <Font name="FontAwesome Regular" size="65.0" />
+         </font></Label>
+      <Slider fx:id="setHour" blockIncrement="1.0" layoutX="458.0" layoutY="292.0" majorTickUnit="1.0" max="23.0" minorTickCount="0" orientation="VERTICAL" prefHeight="120.0" prefWidth="0.0" stylesheets="@../css/Style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Slider>
+      <Label fx:id="setMinLabel" alignment="CENTER" layoutX="514.0" layoutY="220.0" prefHeight="31.0" prefWidth="90.0" text="00" textFill="#57f287">
+         <font>
+            <Font name="FontAwesome Regular" size="45.0" />
+         </font>
+      </Label>
+      <Label fx:id="setHourLabel" alignment="CENTER" layoutX="420.0" layoutY="220.0" prefHeight="31.0" prefWidth="90.0" text="00" textFill="#57f287">
+         <font>
+            <Font name="FontAwesome Regular" size="45.0" />
+         </font>
+      </Label>
+      <Slider fx:id="setMin" blockIncrement="1.0" layoutX="552.0" layoutY="292.0" max="59.0" orientation="VERTICAL" prefHeight="120.0" prefWidth="0.0" stylesheets="@../css/Style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Slider>
+      <Label layoutX="507.0" layoutY="217.0" prefHeight="0.0" prefWidth="13.0" text=":" textFill="#57f287">
+         <font>
+            <Font name="FontAwesome Regular" size="45.0" />
+         </font>
+      </Label>
+      <Button layoutX="463.0" layoutY="443.0" mnemonicParsing="false" onAction="#setAlarm" prefHeight="32.0" prefWidth="104.0" stylesheets="@../css/Style.css" text="Set Alarm" />
+      <Label fx:id="alarmSetLabel" alignment="TOP_CENTER" layoutX="390.0" layoutY="491.0" prefHeight="109.0" prefWidth="250.0" text="No alarm is set" textAlignment="CENTER" textFill="#57f287">
+         <font>
+            <Font name="FontAwesome Regular" size="30.0" />
+         </font>
+      </Label>
+      <Group />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSettingsScene" prefHeight="22.0" prefWidth="88.0" stylesheets="@../css/Style.css" text="Settings">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="FontAwesome Regular" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
