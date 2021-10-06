@@ -15,7 +15,7 @@
          <font>
             <Font name="FontAwesome Regular" size="65.0" />
          </font></Label>
-      <Slider fx:id="setHour" blockIncrement="1.0" layoutX="458.0" layoutY="292.0" majorTickUnit="1.0" max="23.0" minorTickCount="0" orientation="VERTICAL" prefHeight="120.0" prefWidth="0.0" stylesheets="@../css/Style.css">
+      <Slider fx:id="setHourSlider" blockIncrement="1.0" layoutX="458.0" layoutY="292.0" majorTickUnit="1.0" max="23.0" minorTickCount="0" orientation="VERTICAL" prefHeight="120.0" prefWidth="0.0" stylesheets="@../css/Style.css">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -30,7 +30,7 @@
             <Font name="FontAwesome Regular" size="45.0" />
          </font>
       </Label>
-      <Slider fx:id="setMin" blockIncrement="1.0" layoutX="552.0" layoutY="292.0" max="59.0" orientation="VERTICAL" prefHeight="120.0" prefWidth="0.0" stylesheets="@../css/Style.css">
+      <Slider fx:id="setMinSlider" blockIncrement="1.0" layoutX="552.0" layoutY="292.0" max="59.0" orientation="VERTICAL" prefHeight="120.0" prefWidth="0.0" stylesheets="@../css/Style.css">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -40,8 +40,11 @@
             <Font name="FontAwesome Regular" size="45.0" />
          </font>
       </Label>
-      <Button layoutX="463.0" layoutY="443.0" mnemonicParsing="false" onAction="#setAlarm" prefHeight="32.0" prefWidth="104.0" stylesheets="@../css/Style.css" text="Set Alarm" />
-      <Label fx:id="alarmSetLabel" alignment="TOP_CENTER" layoutX="390.0" layoutY="491.0" prefHeight="109.0" prefWidth="250.0" text="No alarm is set" textAlignment="CENTER" textFill="#57f287">
+      <Button layoutX="463.0" layoutY="443.0" mnemonicParsing="false" onAction="#setAlarm" prefHeight="32.0" prefWidth="104.0" stylesheets="@../css/Style.css" text="Set Alarm">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label fx:id="alarmSetLabel" alignment="TOP_CENTER" layoutX="204.0" layoutY="493.0" prefHeight="33.0" prefWidth="620.0" text="No alarm is set" textAlignment="CENTER" textFill="#57f287">
          <font>
             <Font name="FontAwesome Regular" size="30.0" />
          </font>
