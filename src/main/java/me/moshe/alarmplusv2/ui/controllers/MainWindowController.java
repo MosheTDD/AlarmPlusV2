@@ -50,7 +50,7 @@ public class MainWindowController implements Initializable {
             AsyncTasker.runTaskAsync(() -> Main.getDataFile().save());
         }
         else if(Main.getDataFile().getItem().getAlarmSoundPath() == null){
-            Main.getDataFile().getItem().setAlarmSoundPath("C:\\Users\\Drago\\IdeaProjects\\AlarmPlusV2\\src\\main\\resources\\defaultAlarm.wav");
+            Main.getDataFile().getItem().setAlarmSoundPath("defaultAlarm.wav");
             AsyncTasker.runTaskAsync(() -> Main.getDataFile().save());
         }
         getCurrentTime();
