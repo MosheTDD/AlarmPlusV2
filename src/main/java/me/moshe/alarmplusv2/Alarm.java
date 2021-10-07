@@ -1,10 +1,12 @@
 package me.moshe.alarmplusv2;
 
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import me.border.utilities.scheduler.async.AsyncTask;
 import me.border.utilities.scheduler.async.AsyncTaskBuilder;
 import me.moshe.alarmplusv2.ui.controllers.UnlockWindowController;
@@ -63,6 +65,7 @@ public class Alarm implements Serializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UnlockWindow.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
+            stage.setOnCloseRequest(Event::consume);
             UnlockWindowController unlockWindowController = loader.getController();
             stage.setTitle("Wake up!");
             stage.setScene(new Scene(root, 600, 400));
