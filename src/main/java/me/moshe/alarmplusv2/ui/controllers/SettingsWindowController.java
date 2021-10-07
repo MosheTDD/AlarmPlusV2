@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import me.border.utilities.scheduler.AsyncTasker;
+import me.border.utilities.scheduler.async.AsyncTask;
 import me.border.utilities.scheduler.async.AsyncTaskBuilder;
 import me.moshe.alarmplusv2.Main;
 import me.moshe.alarmplusv2.ui.Interface;
@@ -61,7 +62,12 @@ public class SettingsWindowController implements Initializable {
         dialog.show();
         AsyncTaskBuilder.builder()
                 .after(1500, TimeUnit.MILLISECONDS)
-                .task(() -> Platform.runLater(this::closeNotification))
+                .task(new AsyncTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(() -> closeNotification());
+                    }
+                })
                 .build();
     }
 

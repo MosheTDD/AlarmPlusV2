@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class Interface extends Application {
     public static Stage window;
+    private static MainWindowController mainWindowController;
 
     public void start(String[] args) {
         launch(args);
@@ -28,9 +29,17 @@ public class Interface extends Application {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainWindow.fxml"));
         Parent root = loader.load();
-        MainWindowController alarmPlusV2MainController = loader.getController();
+        mainWindowController = loader.getController();
         window.setScene(new Scene(root, 1024, 768));
         window.show();
-        alarmPlusV2MainController.focus();
+        mainWindowController.focus();
+    }
+
+    public static MainWindowController getMainWindowController() {
+        return mainWindowController;
+    }
+
+    public static void setMainWindowController(MainWindowController mainWindowController) {
+        Interface.mainWindowController = mainWindowController;
     }
 }

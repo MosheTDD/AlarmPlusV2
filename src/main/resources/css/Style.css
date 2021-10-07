@@ -45,3 +45,47 @@
     -fx-mark-color: #57f287;
     -fx-background-color: #57f287;
 }
+
+.list-view{
+    -fx-background-color: transparent;
+    -fx-border-color: #57f287;
+    -fx-border-radius: 5px;
+}
+
+.list-cell:filled:selected {
+    -fx-border-color: #57f287;
+    -fx-border-radius: 5px;
+    -fx-background-color: #57f287;
+    -fx-background-radius: 5px;
+    -fx-text-fill: black;
+}
+
+.list-cell:filled {
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+}
+
+.list-cell:even, .list-cell:odd {
+    -fx-font-size: 24px;
+    -fx-alignment: center;
+    -fx-background-color: transparent;
+}
+
+.scroll-bar{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb{
+    -fx-background-color: #57f287;
+}
+
+

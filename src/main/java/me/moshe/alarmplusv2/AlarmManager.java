@@ -1,5 +1,8 @@
 package me.moshe.alarmplusv2;
 
+import me.border.utilities.scheduler.AsyncTasker;
+import me.moshe.alarmplusv2.ui.Interface;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +20,21 @@ public class AlarmManager {
         if(!alarmExists) {
             Alarm alarm = new Alarm(hour, min);
             alarmList.add(alarm);
+            Main.getDataFile().getItem().getAlarmList().add(alarm);
+            AsyncTasker.runTaskAsync(() -> Main.getDataFile().save());
         }
+    }
+
+    public void deleteAlarm(Alarm alarm){
+        alarm.cancelAlarm();
+        alarmList.remove(alarm);
+        Interface.getMainWindowController().getAlarmListView().getItems().remove(alarm);
+        Main.getDataFile().getItem().getAlarmList().remove(alarm);
+        AsyncTasker.runTaskAsync(() -> Main.getDataFile().save());
+    }
+
+    public void addAlarm(Alarm alarm){
+        alarmList.add(alarm);
     }
 
     public List<Alarm> getAlarmList() {

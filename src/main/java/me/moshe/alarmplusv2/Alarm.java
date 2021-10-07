@@ -7,19 +7,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import me.border.utilities.scheduler.async.AsyncTask;
 import me.border.utilities.scheduler.async.AsyncTaskBuilder;
-import me.moshe.alarmplusv2.ui.controllers.MainWindowController;
 import me.moshe.alarmplusv2.ui.controllers.UnlockWindowController;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-public class Alarm {
+public class Alarm implements Serializable {
 
-    AlarmManager alarmManager = MainWindowController.alarmManager;
-    int alarmHour;
-    int alarmMin;
+    transient AlarmManager alarmManager = Main.getAlarmManager();
+    private final int alarmHour;
+    private final int alarmMin;
+    private transient AsyncTask task;
 
     public Alarm(int alarmHour, int alarmMin){
         this.alarmHour = alarmHour;
@@ -35,20 +36,25 @@ public class Alarm {
         return alarmHour == hour && alarmMin == min;
     }
 
-    private void alarmTrigger(){
+    public void alarmTrigger(){
         LocalTime timePressed = LocalTime.now();
         LocalTime alarm = LocalTime.of(alarmHour, alarmMin);
         long untilAlarm = timePressed.until(alarm, ChronoUnit.MILLIS);
         if(untilAlarm < 0) {
             untilAlarm -= untilAlarm - 8.64e+7 - untilAlarm;
         }
-        AsyncTaskBuilder.builder()
+        Alarm thisAlarm = this;
+        task = AsyncTaskBuilder.builder()
                 .after(untilAlarm, TimeUnit.MILLISECONDS)
-                .task(() -> Platform.runLater(() -> {
-                   openUnlockWindow();
-                    for (int i = 0; i < alarmManager.getAlarmList().size(); i++)
-                        if (alarmManager.getAlarmList().get(i).compareAlarm(alarmHour, alarmMin)) alarmManager.getAlarmList().remove(i);
-                }))
+                .task(new AsyncTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(() -> {
+                            openUnlockWindow();
+                            alarmManager.deleteAlarm(thisAlarm);
+                        });
+                    }
+                })
                 .build();
     }
 
@@ -70,12 +76,8 @@ public class Alarm {
         }
     }
 
-    public void setAlarmMin(int alarmMin) {
-        this.alarmMin = alarmMin;
-    }
-
-    public void setAlarmHour(int alarmHour) {
-        this.alarmHour = alarmHour;
+    public void cancelAlarm() {
+        task.closeSilently();
     }
 
     public int getAlarmHour() {
@@ -88,6 +90,9 @@ public class Alarm {
 
     @Override
     public String toString() {
-        return "Alarm is set to: " + alarmHour + ":" + alarmMin;
+        String fixedHour = String.valueOf(alarmHour), fixedMin = String.valueOf(alarmMin);
+        if(alarmHour < 10)  fixedHour = "0" + alarmHour;
+        if (alarmMin < 10) fixedMin = "0" + alarmMin;
+        return fixedHour + ":" + fixedMin;
     }
 }
