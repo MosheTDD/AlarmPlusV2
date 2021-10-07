@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import me.moshe.alarmplusv2.ui.controllers.MainWindowController;
 
@@ -26,6 +27,7 @@ public class Interface extends Application {
     private void openMainWindow() throws IOException {
         window.setTitle("AlarmPlusV2");
         window.setResizable(false);
+        window.getIcons().add(new Image("Imgs/Icon.png"));
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainWindow.fxml"));
         Parent root = loader.load();

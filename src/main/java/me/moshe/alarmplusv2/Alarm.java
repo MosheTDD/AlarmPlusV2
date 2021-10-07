@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.border.utilities.scheduler.async.AsyncTask;
@@ -66,6 +67,7 @@ public class Alarm implements Serializable {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setOnCloseRequest(Event::consume);
+            stage.getIcons().add(new Image("Imgs/Icon.png"));
             UnlockWindowController unlockWindowController = loader.getController();
             stage.setTitle("Wake up!");
             stage.setScene(new Scene(root, 600, 400));
